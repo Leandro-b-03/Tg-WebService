@@ -3,6 +3,7 @@
 	\Slim\Slim::registerAutoloader();
 	$app = new \Slim\Slim();
 	$app->response()->header('Content-Type', 'application/json;charset=utf-8');
+	$app->response()->header("Access-Control-Allow-Origin : * "); 
 	$app->post('/tag', function () use ($app){
 		$con = getConn();
 		$sql = "SELECT COUNT(*) AS total FROM pulseira_id WHERE idTag='" . $app->request->post('tag') . "'";
