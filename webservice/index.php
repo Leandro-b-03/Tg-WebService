@@ -30,7 +30,13 @@
 		$con = getConn();
 		$sql = 'SELECT  o.amount, b.id as id_bracelet, o.id as id_order FROM sb_customers c LEFT JOIN sb_customer_bracelet cb ON ( c.id = cb.id_customer) LEFT JOIN sb_bracelets b ON (b.id = cb.id_bracelet) LEFT JOIN sb_orders o ON (o.id_customer = c.id) WHERE c.id = cb.id_customer AND (b.tag = \''.$app->request->get('param').'\' OR c.cpf = \''.$app->request->get('param').'\')';
 		$result = $con->query($sql);
-		echo json_encode($result->fetch(PDO::FETCH_ASSOC));
+		$rows = $result->fetch(PDO::FETCH_ASSOC);
+		if (count($rows)){
+			echo json_encode($rows);
+		} else {
+			echo json_encode(array('status'=>'false'));
+		}
+		
 	});
 
 	$app->get('/getOrderDescription', function () use ($app){
