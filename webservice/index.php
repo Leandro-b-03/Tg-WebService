@@ -7,11 +7,11 @@
 	$app->response()->header("Access-Control-Allow-Origin : * "); 
 	$app->post('/tag', function () use ($app){
 		$con = getConn();
-		$sql = "SELECT COUNT(*) AS total FROM pulseira_id WHERE idTag='" . $app->request->post('tag') . "'";
+		$sql = "SELECT COUNT(*) AS total FROM user_bracelet WHERE tag='" . $app->request->post('tag') . "' AND status != '-1'";
 		$query = $con->query($sql);
 		$result = $query->fetch(PDO::FETCH_ASSOC);
 		if ($result['total'] == 0){
-			$sql = "INSERT INTO pulseira_id SET idTag='" . $app->request->post('tag') . "', idFuncionario='" . $app->request->post('id_funcionario') . "'";
+			$sql = "INSERT INTO user_bracelet SET tag='" . $app->request->post('tag') . "', id_user='" . $app->request->post('id_funcionario') . "',  status='-1'";
 			$con->query($sql);
 		}
 	});
@@ -21,10 +21,23 @@
 	});
 
 	$app->get('/login',function () use ($app) {
-		$con = getConn();
-		$sql = "SELECT COUNT(*) as total,idFuncionario FROM login WHERE login='". $app->request->get('login') ."' and senha='" . $app->request->get('senha') . "'";
-		$result = $con->query($sql);
-		echo json_encode($result->fetch(PDO::FETCH_ASSOC));
+		
+
+		$cURL = curl_init('http://smartbracelet.someideias.com//app/login');
+		curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+		  $dados = array(
+		    'username' => $app->request->get('login'),
+		    'password' => $app->request->get('senha')
+		  );
+
+		  
+		  curl_setopt($cURL, CURLOPT_POST, true);
+		  
+		  curl_setopt($cURL, CURLOPT_POSTFIELDS, $dados);
+
+		  echo curl_exec($cURL);
+
+		  curl_close($cURL);
 	});
 
 	$app->get('/gettotal', function () use ($app){
