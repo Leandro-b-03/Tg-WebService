@@ -21,24 +21,14 @@
 	});
 
 	$app->get('/login',function () use ($app) {
-		
+        $cURL = curl_init('smartbracelet.someideias.com/app/login?username=' . $app->request->get('login') . '&password=' . $app->request->get('senha'));
+        
+        curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
 
-		$cURL = curl_init('http://smartbracelet.someideias.com//app/login');
-		curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
-		  $dados = array(
-		    'username' => $app->request->get('login'),
-		    'password' => $app->request->get('senha')
-		  );
+        echo curl_exec($cURL);
 
-		  
-		  curl_setopt($cURL, CURLOPT_POST, true);
-		  
-		  curl_setopt($cURL, CURLOPT_POSTFIELDS, $dados);
-
-		  echo curl_exec($cURL);
-
-		  curl_close($cURL);
-	});
+        curl_close($cURL);
+    });
 
 	$app->get('/gettotal', function () use ($app){
 		$con = getConn();
