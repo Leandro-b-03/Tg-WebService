@@ -7,7 +7,7 @@
 	$app->response()->header("Access-Control-Allow-Origin : * "); 
 	$app->post('/tag', function () use ($app){
 		$con = getConn();
-		$sql = "SELECT COUNT(*) AS total FROM sb_user_bracelet WHERE tag='" . $app->request->post('tag') . "' AND status == '-1'";
+		$sql = "SELECT COUNT(*) AS total FROM sb_user_bracelet WHERE tag='" . $app->request->post('tag') . "' AND status = '-1'";
 		$query = $con->query($sql);
 		$result = $query->fetch(PDO::FETCH_ASSOC);
 		if ($result['total'] == 0){
