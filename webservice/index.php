@@ -11,7 +11,7 @@
 		$query = $con->query($sql);
 		$result = $query->fetch(PDO::FETCH_ASSOC);
 		if ($result['total'] == 0){
-			$sql = "INSERT INTO sb_user_bracelet SET tag='" . $app->request->post('tag') . "', id_user='" . $app->request->post('id_funcionario') . "',  status='-1'";
+			$sql = "INSERT INTO sb_user_bracelet SET tag='" . $app->request->post('tag') . "', id_user='" . $app->request->post('id_funcionario') . "',  status='-1', created_at='".  DateTime('now') ."'";
 			$con->query($sql);
 			echo 'true';
 		} else {
