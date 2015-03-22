@@ -14,6 +14,8 @@
 			$sql = "INSERT INTO sb_user_bracelet SET tag='" . $app->request->post('tag') . "', id_user='" . $app->request->post('id_funcionario') . "',  status='-1'";
 			$con->query($sql);
 			echo 'true';
+		} else {
+			echo 'false';
 		}
 	});
 
