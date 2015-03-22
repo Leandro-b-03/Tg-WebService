@@ -4,7 +4,8 @@
 	$app = new \Slim\Slim();
 	header("Access-Control-Allow-Origin : * ");
 	$app->response()->header('Content-Type', 'application/json;charset=utf-8');
-	$app->response()->header("Access-Control-Allow-Origin : * "); 
+	$app->response()->header("Access-Control-Allow-Origin : * ");
+	date_default_timezone_set('America/Sao_Paulo');
 	$app->post('/tag', function () use ($app){
 		$con = getConn();
 		$sql = "SELECT COUNT(*) AS total FROM sb_user_bracelet WHERE tag='" . $app->request->post('tag') . "' AND status = '-1'";
