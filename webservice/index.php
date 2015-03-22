@@ -40,6 +40,7 @@
 		$result = $con->query($sql);
 		$rows = $result->fetch(PDO::FETCH_ASSOC);
 		if (count($rows)){
+			$rows['amount'] = 'R$' . number_format($rows['amount'], 2, ',', '.');
 			echo json_encode($rows);
 		} else {
 			echo json_encode(array('status'=>'false'));
