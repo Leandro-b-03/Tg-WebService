@@ -50,7 +50,7 @@
 
 	$app->get('/getOrderDescription', function () use ($app){
 		$con = getConn();
-		$sql = "SELECT *, (SELECT amount FROM sb_orders WHERE id = '" . $app->request->get('id') . "') AS amount FROM  sb_order_bracelet ob LEFT JOIN sb_products  p ON (ob.id_product = p.id ) WHERE ob.id_order = '" . $app->request->get('id') . "'";
+		$sql = "SELECT ob.quantity , ob.price , name , (SELECT amount FROM sb_orders WHERE id = '" . $app->request->get('id') . "') AS amount FROM  sb_order_bracelet ob LEFT JOIN sb_products  p ON (ob.id_product = p.id ) WHERE ob.id_order = '" . $app->request->get('id') . "'";
 		$result = $con->query($sql);
 		echo json_encode($result->fetchAll(PDO::FETCH_ASSOC));
 	});
