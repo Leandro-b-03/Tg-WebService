@@ -52,6 +52,10 @@
 		$con = getConn();
 		$sql = "SELECT ob.quantity , ob.price , name , (SELECT amount FROM sb_orders WHERE id = '" . $app->request->get('id') . "') AS amount FROM  sb_order_bracelet ob LEFT JOIN sb_products  p ON (ob.id_product = p.id ) WHERE ob.id_order = '" . $app->request->get('id') . "'";
 		$result = $con->query($sql);
+		$rows = $result->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($rows as $key => $value) {
+			$rows['key']['price'] = 'R$' . number_format($rows['key']['price'], 2, ',', '.');
+		}
 		echo json_encode($result->fetchAll(PDO::FETCH_ASSOC));
 	});
 
